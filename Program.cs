@@ -5,31 +5,56 @@ class Program
     static void Main(string[] args)
     {
         Console.WriteLine("Simple Calculator");
+        Console.WriteLine("Type 'exit' at any time to quit.\n");
 
-        double num1 = GetNumber("Enter first number: ");
-        string op = GetOperator();
-        double num2 = GetNumber("Enter second number: ");
-
-        double? result = Calculate(num1, num2, op);
-
-        if (result != null)
+        while (true)
         {
-            Console.WriteLine("Result: " + result);
+            string input = GetRawInput("Enter first number or 'exit': ");
+            if (IsExit(input)) break;
+            double num1 = ParseDouble(input);
+
+            string op = GetOperator();
+            if (IsExit(op)) break;
+
+            input = GetRawInput("Enter second number or 'exit': ");
+            if (IsExit(input)) break;
+            double num2 = ParseDouble(input);
+
+            double? result = Calculate(num1, num2, op);
+
+            if (result != null)
+            {
+                Console.WriteLine("Result: " + result + "\n");
+            }
         }
+
+        Console.WriteLine("Goodbye!");
     }
 
-    static double GetNumber(string prompt)
+    static string GetRawInput(string prompt)
+    {
+        Console.Write(prompt);
+        return Console.ReadLine();
+    }
+
+    static bool IsExit(string input)
+    {
+        return input.Trim().ToLower() == "exit";
+    }
+
+    static double ParseDouble(string input)
     {
         while (true)
         {
-            Console.Write(prompt);
             try
             {
-                return Convert.ToDouble(Console.ReadLine());
+                return Convert.ToDouble(input);
             }
             catch (FormatException)
             {
-                Console.WriteLine("Invalid input. Please enter a numeric value.");
+                Console.Write("Invalid input. Enter a numeric value: ");
+                input = Console.ReadLine();
+                if (IsExit(input)) Environment.Exit(0);
             }
         }
     }
@@ -38,8 +63,9 @@ class Program
     {
         while (true)
         {
-            Console.Write("Enter operator (+, -, *, /): ");
+            Console.Write("Enter operator (+, -, *, /) or 'exit': ");
             string op = Console.ReadLine();
+            if (IsExit(op)) return op;
             if (op == "+" || op == "-" || op == "*" || op == "/")
             {
                 return op;
@@ -68,5 +94,7 @@ class Program
         }
     }
 }
+
+
 
 
