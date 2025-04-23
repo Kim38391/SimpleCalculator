@@ -1,51 +1,72 @@
 ﻿using System;
+
 class Program
 {
     static void Main(string[] args)
     {
         Console.WriteLine("Simple Calculator");
-        try
+
+        double num1 = GetNumber("Enter first number: ");
+        string op = GetOperator();
+        double num2 = GetNumber("Enter second number: ");
+
+        double? result = Calculate(num1, num2, op);
+
+        if (result != null)
         {
-            Console.Write("Enter First number: ");
-            double num1 = Convert.ToDouble(Console.ReadLine());
-            Console.Write("Enter operator (+, -, *, /): ");
-            string op = Console.ReadLine();
-            Console.Write("Enter second number: ");
-            double num2 = Convert.ToDouble(Console.ReadLine());
-            double result = 0;
-            switch (op)
-            {
-                case "+":
-                    result = num1 + num2;
-                    break;
-                case "-":
-                    result = num1 - num2;
-                    break;
-                case "*":
-                    result = num1 * num2;
-                    break;
-                case "/":
-                    if (num2 == 0)
-                    {
-                        Console.WriteLine("Error: Cannot divide by zero.");
-                        return;
-                    }
-                    result = num1 / num2;
-                    break;
-                default:
-                    Console.WriteLine("Invalid operator.");
-                    return;
-            }
             Console.WriteLine("Result: " + result);
         }
-        catch (FormatException)
+    }
+
+    static double GetNumber(string prompt)
+    {
+        while (true)
         {
-            Console.WriteLine("Invalid number entered. Please enter numeric values.");
+            Console.Write(prompt);
+            try
+            {
+                return Convert.ToDouble(Console.ReadLine());
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Invalid input. Please enter a numeric value.");
+            }
         }
-        catch (Exception ex)
+    }
+
+    static string GetOperator()
+    {
+        while (true)
         {
-            Console.WriteLine("An unexpected error occurred: " + ex.Message);
+            Console.Write("Enter operator (+, -, *, /): ");
+            string op = Console.ReadLine();
+            if (op == "+" || op == "-" || op == "*" || op == "/")
+            {
+                return op;
+            }
+            Console.WriteLine("Invalid operator. Try again.");
+        }
+    }
+
+    static double? Calculate(double num1, double num2, string op)
+    {
+        switch (op)
+        {
+            case "+": return num1 + num2;
+            case "-": return num1 - num2;
+            case "*": return num1 * num2;
+            case "/":
+                if (num2 == 0)
+                {
+                    Console.WriteLine("Error: Division by zero.");
+                    return null;
+                }
+                return num1 / num2;
+            default:
+                Console.WriteLine("Unknown operator.");
+                return null;
         }
     }
 }
+
 
