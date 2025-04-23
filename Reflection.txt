@@ -1,0 +1,13 @@
+﻿What did you change in each commit?
+
+"Add basic calculator functionality". //In this commit I added the code needed to run the console app.
+
+"Add error handling for user input". //In this commit I added try-catch blocks to handle invalid input and to display an error meassage when done so.
+
+"Refactor logic into reusable methods". //In this commit I used GetOperator() function to refactor the code.
+
+"Add main loop to repeat actions until exit". //In this commit I added a looping feature (return) to allow the program to continue running until the user types "exit".
+
+What did you learn about Git or GitHub?
+
+What I earned about Git/GitHub is that it is a way to collaborate on projects. It allows for version control which allows you to keep track of everything that changed between the versions. These are great ways to manage your project when working in a large team. This can also help keep work organized and stramline the progress of the project by having teams work on different aspects.
